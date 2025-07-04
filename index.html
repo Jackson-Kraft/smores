@@ -4,32 +4,91 @@
   <title>S'mores Calculator</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      margin: 40px;
-      max-width: 500px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #fffaf3;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
     }
-    input, button {
-      padding: 8px;
+
+    .calculator {
+      background-color: #fff;
+      border: 2px solid #e0c48f;
+      border-radius: 12px;
+      padding: 30px;
+      max-width: 500px;
+      width: 100%;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      color: #a65f2e;
+      text-align: center;
+    }
+
+    label {
+      display: block;
+      margin-top: 20px;
+      font-weight: bold;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
       font-size: 16px;
       margin-top: 5px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
     }
+
+    button {
+      width: 100%;
+      margin-top: 25px;
+      padding: 12px;
+      font-size: 16px;
+      background-color: #ffb347;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      color: #4b2c20;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #f39c12;
+    }
+
     #results {
-      margin-top: 20px;
+      margin-top: 30px;
       font-size: 18px;
+      background-color: #fdf5e6;
+      padding: 20px;
+      border-radius: 8px;
+      border: 1px solid #e0c48f;
+    }
+
+    ul {
+      padding-left: 20px;
     }
   </style>
 </head>
 <body>
-  <h1>S'mores Calculator</h1>
-  <label for="people">How many people?</label>
-  <input type="number" id="people" min="1" value="1"><br>
+  <div class="calculator">
+    <h1>S'mores Calculator</h1>
+    <label for="people">How many people?</label>
+    <input type="number" id="people" min="1" value="1">
 
-  <label for="smoresPerPerson">How many s'mores per person?</label>
-  <input type="number" id="smoresPerPerson" min="1" value="1"><br>
+    <label for="smoresPerPerson">How many s'mores per person?</label>
+    <input type="number" id="smoresPerPerson" min="1" value="1">
 
-  <button onclick="calculate()">Calculate</button>
+    <button onclick="calculate()">Calculate</button>
 
-  <div id="results"></div>
+    <div id="results"></div>
+  </div>
 
   <script>
     function calculate() {
