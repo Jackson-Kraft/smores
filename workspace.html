@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>S'mores Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      max-width: 500px;
+    }
+    input, button {
+      padding: 8px;
+      font-size: 16px;
+    }
+    #results {
+      margin-top: 20px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <h1>S'mores Calculator</h1>
+  <label for="people">How many people?</label>
+  <input type="number" id="people" min="1" value="1">
+  <button onclick="calculate()">Calculate</button>
+
+  <div id="results"></div>
+
+  <script>
+    function calculate() {
+      const people = parseInt(document.getElementById('people').value);
+
+      if (isNaN(people) || people <= 0) {
+        document.getElementById('results').innerHTML = "Please enter a valid number of people.";
+        return;
+      }
+
+      const marshmallows = people * 1;
+      const grahamCrackers = people * 2;
+      const chocolateSquares = people * 2;
+
+      // Packaging estimates
+      const marshPerBag = 32;
+      const crackersPerBag = 24 * 2; // 24 s'mores worth of crackers = 48 crackers
+      const squaresPerBar = 12;
+      const barsPerBox = 36;
+
+      const totalBars = Math.ceil(chocolateSquares / squaresPerBar);
+      const totalBoxes = Math.floor(totalBars / barsPerBox);
+      const extraBarsNeeded = totalBars % barsPerBox;
+
+      const almostAnotherBox = (barsPerBox - extraBarsNeeded) <= 15;
+
+      let chocolateMessage = "";
+      if (totalBars <= barsPerBox && !almostAnotherBox) {
+        chocolateMessage = `${totalBars} chocolate bars`;
+      } else if (totalBars <= barsPerBox && almostAnotherBox) {
+        chocolateMessage = `1 box of chocolate bars (you’re close to needing one)`;
+      } else if (extraBarsNeeded === 0 || almostAnotherBox) {
+        chocolateMessage = `${totalBoxes + 1} boxes of chocolate bars`;
+      } else {
+        chocolateMessage = `${totalBoxes} boxes of chocolate bars + ${extraBarsNeeded} extra bars`;
+      }
+
+      const marshBags = Math.ceil(marshmallows / marshPerBag);
+      const crackerBags = Math.ceil(grahamCrackers / crackersPerBag);
+
+      document.getElementById('results').innerHTML = `
+        <p>For <strong>${people}</strong> s'mores:</p>
+        <ul>
+          <li>${marshmallows} marshmallows (${marshBags} bag${marshBags > 1 ? 's' : ''})</li>
+          <li>${grahamCrackers} graham crackers (${crackerBags} box${crackerBags > 1 ? 's' : ''})</li>
+          <li>${chocolateSquares} chocolate squares → ${chocolateMessage}</li>
+        </ul>
+      `;
+    }
+  </script>
+</body>
+</html>
