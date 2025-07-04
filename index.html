@@ -11,6 +11,7 @@
     input, button {
       padding: 8px;
       font-size: 16px;
+      margin-top: 5px;
     }
     #results {
       margin-top: 20px;
@@ -21,7 +22,11 @@
 <body>
   <h1>S'mores Calculator</h1>
   <label for="people">How many people?</label>
-  <input type="number" id="people" min="1" value="1">
+  <input type="number" id="people" min="1" value="1"><br>
+
+  <label for="smoresPerPerson">How many s'mores per person?</label>
+  <input type="number" id="smoresPerPerson" min="1" value="1"><br>
+
   <button onclick="calculate()">Calculate</button>
 
   <div id="results"></div>
@@ -29,15 +34,17 @@
   <script>
     function calculate() {
       const people = parseInt(document.getElementById('people').value);
+      const smoresPerPerson = parseInt(document.getElementById('smoresPerPerson').value);
 
-      if (isNaN(people) || people <= 0) {
-        document.getElementById('results').innerHTML = "Please enter a valid number of people.";
+      if (isNaN(people) || people <= 0 || isNaN(smoresPerPerson) || smoresPerPerson <= 0) {
+        document.getElementById('results').innerHTML = "Please enter valid numbers for both fields.";
         return;
       }
 
-      const marshmallows = people * 1;
-      const grahamCrackers = people * 2;
-      const chocolateSquares = people * 2;
+      const totalSmores = people * smoresPerPerson;
+      const marshmallows = totalSmores * 1;
+      const grahamCrackers = totalSmores * 2;
+      const chocolateSquares = totalSmores * 2;
 
       // Packaging estimates
       const marshPerBag = 32;
@@ -66,14 +73,27 @@
       const crackerBags = Math.ceil(grahamCrackers / crackersPerBag);
 
       document.getElementById('results').innerHTML = `
-        <p>For <strong>${people}</strong> s'mores:</p>
+        <p>For <strong>${totalSmores}</strong> s'mores (${people} people × ${smoresPerPerson} each):</p>
         <ul>
           <li>${marshmallows} marshmallows (${marshBags} bag${marshBags > 1 ? 's' : ''})</li>
-          <li>${grahamCrackers} graham crackers (${crackerBags} box${crackerBags > 1 ? 's' : ''})</li>
+          <li>${grahamCrackers} graham crackers (${crackerBags} box${crackerBags > 1 ? 'es' : ''})</li>
           <li>${chocolateSquares} chocolate squares → ${chocolateMessage}</li>
         </ul>
       `;
     }
+
+    // Enable pressing Enter to trigger calculation
+    document.addEventListener("DOMContentLoaded", () => {
+      const inputs = document.querySelectorAll('input');
+      inputs.forEach(input => {
+        input.addEventListener("keypress", function (e) {
+          if (e.key === "Enter") {
+            e.preventDefault();
+            calculate();
+          }
+        });
+      });
+    });
   </script>
 </body>
 </html>
